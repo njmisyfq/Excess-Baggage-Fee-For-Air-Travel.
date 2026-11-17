@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'main_page.dart';
+
 void main() => runApp(const BaggageApp());
 
 class AppColors {
@@ -19,6 +21,7 @@ class BaggageApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
+        useMaterial3: true,
         colorSchemeSeed: AppColors.olive,
         scaffoldBackgroundColor: AppColors.cream,
         appBarTheme: const AppBarTheme(
@@ -44,7 +47,8 @@ class _HomePageState extends State<HomePage> {
   int _index = 0;
 
   final _pages = const [
-    Center(child: Text('Home page')),
+    //Center(child: Text('Home page')),
+    MainPage(),
     Center(child: Text('About page')),
   ];
 
