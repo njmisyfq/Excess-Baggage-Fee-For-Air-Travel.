@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'about_page.dart';
 import 'main_page.dart';
 
 void main() => runApp(const BaggageApp());
@@ -49,7 +50,8 @@ class _HomePageState extends State<HomePage> {
   final _pages = const [
     //Center(child: Text('Home page')),
     MainPage(),
-    Center(child: Text('About page')),
+    //Center(child: Text('About page')),
+    AboutPage(),
   ];
 
   @override
