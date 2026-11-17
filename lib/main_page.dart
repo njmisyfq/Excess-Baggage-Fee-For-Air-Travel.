@@ -58,6 +58,31 @@ class _MainPageState extends State<MainPage> {
     return weightError == null && rateError == null;
   }
 
+  void _calculate() {
+    if (!_validate()) {
+      setState(() {
+        _excessWeight = null;
+        _charge = null;
+        _total = null;
+      });
+      return;
+    }
+
+    final weight = double.parse(_weightCtrl.text.trim());
+    final rate = double.parse(_rateCtrl.text.trim());
+    final allowance = _ticketClass == 'Economy' ? 20.0 : 40.0;
+
+    final excess = (weight - allowance) > 0 ? (weight - allowance) : 0.0;
+    final charge = excess * rate;
+    final total = charge + (0.08 * charge);
+
+    setState(() {
+      _excessWeight = excess;
+      _charge = charge;
+      _total = total;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -159,9 +184,42 @@ class _MainPageState extends State<MainPage> {
               foregroundColor: AppColors.cream,
               padding: const EdgeInsets.symmetric(vertical: 16),
             ),
-            onPressed: _validate,
+            onPressed: _calculate,
             child: const Text('Calculate', style: TextStyle(fontSize: 16)),
           ),
+
+          if (_total != null) ...[
+            const SizedBox(height: 24),
+            Card(
+              color: AppColors.sage,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Excess weight: ${_excessWeight!.toStringAsFixed(1)} kg',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Excess charge: RM ${_charge!.toStringAsFixed(2)}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const Divider(color: AppColors.dark),
+                    Text(
+                      'Total payable (incl. 8% tax): RM ${_total!.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.dark,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
