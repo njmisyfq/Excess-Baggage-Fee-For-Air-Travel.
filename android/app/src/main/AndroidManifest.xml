@@ -8,7 +8,7 @@
 </queries>
 
     <application
-        android:label="baggage_calculator"
+        android:label="Excess Baggage Fee Calc"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
